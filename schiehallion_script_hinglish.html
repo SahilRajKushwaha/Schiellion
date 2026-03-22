@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शिहैलियन प्रयोग — YouTube Script (Hinglish)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+Devanagari:wght@300;400;600&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --card: #161616;
+    --card2: #1c1c1c;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --text: #e8e0d0;
+    --muted: #7a7060;
+    --accent: #7eb8c9;
+    --red: #e06030;
+    --border: #272727;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', 'Noto Sans Devanagari', sans-serif;
+    font-weight: 300;
+    line-height: 1.85;
+    padding-bottom: 80px;
+  }
+
+  header {
+    background: linear-gradient(150deg, #181208 0%, #0d0d0d 70%);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 40px 36px;
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute; bottom: -80px; right: -40px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 10px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 14px; opacity: 0.75;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 50px);
+    font-weight: 900; line-height: 1.15;
+    max-width: 680px; margin-bottom: 10px;
+  }
+  h1 .hl { color: var(--gold); }
+  .subtitle {
+    font-size: 14px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pill {
+    font-size: 11px; letter-spacing: 0.5px;
+    color: var(--muted); border: 1px solid var(--border);
+    padding: 4px 12px; border-radius: 20px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .main { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  /* Section */
+  .section { margin-top: 52px; }
+  .sec-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px;
+  }
+  .sec-tag {
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.06);
+    padding: 3px 10px; border-radius: 3px;
+    white-space: nowrap;
+  }
+  .sec-line { flex: 1; height: 1px; background: var(--border); }
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--gold-light); margin-bottom: 14px;
+  }
+
+  /* Script table */
+  .script-block {
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .row:last-child { border-bottom: none; }
+  .dir {
+    padding: 16px 14px;
+    background: rgba(0,0,0,0.25);
+    border-right: 1px solid var(--border);
+  }
+  .dir-label {
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .dir-label.v { color: var(--accent); }
+  .dir-label.a { color: var(--gold); }
+  .dir-label.n { color: var(--muted); }
+  .dir-label.c { color: var(--red); }
+  .dir-text { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+  .dlg {
+    padding: 16px 22px;
+    font-size: 15px; line-height: 1.9;
+  }
+  .dlg.hook {
+    font-size: 16.5px; font-weight: 600;
+    color: #f0c468;
+  }
+  .dlg em { color: var(--accent); font-style: normal; font-weight: 600; }
+  .dlg strong { color: var(--gold-light); font-weight: 600; }
+  .dlg .en { color: #b8d8e8; font-style: italic; } /* English phrases */
+  .dlg .shout { color: var(--red); font-weight: 700; }
+
+  /* callout */
+  .callout {
+    border-left: 3px solid var(--gold);
+    background: rgba(201,168,76,0.04);
+    padding: 12px 16px; border-radius: 0 6px 6px 0;
+    margin: 14px 0; font-size: 12.5px;
+    color: var(--muted); font-style: italic;
+  }
+  .callout strong { color: var(--gold); font-style: normal; }
+
+  /* formula */
+  .formula-box {
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(126,184,201,0.2);
+    border-radius: 6px; padding: 14px 20px;
+    margin: 10px 0; font-family: monospace;
+    font-size: 13.5px; color: var(--accent);
+    text-align: center; letter-spacing: 0.5px;
+  }
+
+  /* timeline */
+  .timeline { padding-left: 26px; position: relative; margin-top: 12px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 5px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-item::before {
+    content: ''; position: absolute;
+    left: -21px; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 50%; background: var(--gold);
+  }
+  .tl-head { font-size: 11px; letter-spacing: 1px; color: var(--gold); font-weight: 600; text-transform: uppercase; margin-bottom: 3px; }
+  .tl-body { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+  /* outro */
+  .outro-card {
+    background: linear-gradient(135deg, #1a160a, #111111);
+    border: 1px solid rgba(201,168,76,0.22);
+    border-radius: 10px; padding: 32px;
+    margin-top: 16px; text-align: center;
+  }
+  .outro-card p {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px; color: var(--gold-light);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .outro-card span { font-size: 12px; color: var(--muted); }
+
+  @media(max-width:600px){
+    .row { grid-template-columns: 1fr; }
+    .dir { border-right: none; border-bottom: 1px solid var(--border); }
+    header { padding: 36px 20px 24px; }
+    .main { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="main">
+    <div class="eyebrow">YouTube Video Script · Hinglish</div>
+    <h1>शिहैलियन Experiment:<br><span class="hl">Duniya ko Taulne ka Safar</span></h1>
+    <div class="subtitle">Hinglish — Hindi + English mixed, conversational YouTube tone</div>
+    <div class="pills">
+      <span class="pill">⏱ ~8–10 min</span>
+      <span class="pill">🎬 Educational Science</span>
+      <span class="pill">🗣 Hinglish</span>
+      <span class="pill">🎯 General Audience</span>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- HOOK -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Hook</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">🎣 Opening — Grab the viewer (0:00 – 0:35)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Spinning Earth globe, then zoom out to space. Dramatic slow music fades in.</div>
+        </div>
+        <div class="dlg hook">
+          Ek simple sa sawaal —<br>
+          Is poori Earth ka <em>weight</em> kitna hai?<br><br>
+          Aur sabse bada question — <strong>measure kaise kiya?</strong><br><br>
+          Koi modern machine nahi. Koi satellite nahi.<br>
+          Sirf ek pahaad, kuch ropes, aur insaan ki
+          <span class="shout">ek ziddi curiosity.</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label a">Audio</div>
+          <div class="dir-text">Music fades to silence. Dramatic pause.</div>
+        </div>
+        <div class="dlg">
+          Yeh hai <strong>Schiehallion Experiment</strong> ki kahani —<br>
+          <em>duniya ko taulne ki pehli serious koshish.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACT 1 -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Act 1</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">💡 Core Idea — Newton ka Gravity wala Jugaad (0:35 – 1:45)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Animation: plumb bob hanging straight. Then a mountain appears beside it — bob tilts slightly.</div>
+        </div>
+        <div class="dlg">
+          Toh baat start hoti hai Newton se.<br><br>
+          Newton ne kaha tha — <em>"Every object attracts every other object."</em><br>
+          Badi cheez? <strong>Zyada attraction.</strong><br><br>
+          Toh socho — agar tum ek bhaari-bharkam pahaad ke paas ek
+          <span class="en">plumb bob</span> — yani ek pathar ko dhaage se — latkaao…<br><br>
+          Toh woh seedha nahi rahega. <em>Woh thoda sa pahaad ki taraf jhuk jaayega.</em>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label n">Note</div>
+          <div class="dir-text">Slow down here. Let the concept land. Add pause after "jhuk jaayega."</div>
+        </div>
+        <div class="dlg">
+          Ab agar hum us <span class="en">deflection angle</span> ko precisely measure kar lein,
+          aur pahaad ki density pata ho —<br><br>
+          Toh hum <em>Earth ka average density</em> figure out kar sakte hain.<br><br>
+          Simple idea, right? <strong>But execution? Bahut mushkil.</strong>
+        </div>
+      </div>
+    </div>
+    <div class="callout"><strong>On-screen text:</strong> "Deflection angle → Mountain's pull vs Earth's pull → Earth's density"</div>
+  </div>
+
+  <!-- ACT 2 -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Act 2</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">🔭 Maskelyne aur Sahi Pahaad ki Talaash (1:45 – 3:15)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">18th century map of Britain. Portrait of Maskelyne. Royal Society building illustration.</div>
+        </div>
+        <div class="dlg">
+          Year <strong>1773</strong>. Astronomer <em>Nevil Maskelyne</em> — Britain ke
+          <span class="en">Astronomer Royal</span> — ne Royal Society ke saamne ek proposal rakha.<br><br>
+          "Hume ek aisa pahaad chahiye jo <em>akela ho, symmetric ho,</em>
+          aur jis ki slopes steep hon."<br><br>
+          Surveyor <strong>Charles Mason</strong> ko kaam diya gaya — jaao aur dhoondo.
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Aerial shot / illustration of Schiehallion peak in Scotland. Green highlands.</div>
+        </div>
+        <div class="dlg">
+          Mahino ki khoj ke baad — Scotland mein mila ek perfect candidate:<br>
+          <strong>Schiehallion.</strong><br><br>
+          Yeh pahaad tha —<br>
+          ✅ Baaki pahaadon se kaafi door<br>
+          ✅ Almost perfectly symmetric<br>
+          ✅ Steep slopes, clean shape<br><br>
+          <em>Ideal for the experiment.</em>
+        </div>
+      </div>
+    </div>
+    <div class="callout"><strong>B-roll suggestion:</strong> Real footage of Schiehallion, Scottish Highlands, old maps</div>
+  </div>
+
+  <!-- ACT 3 -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Act 3</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">📐 Experiment — Measuring the Pull (3:15 – 5:45)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Diagram: mountain with north & south observatories. Star positions with angle lines.</div>
+        </div>
+        <div class="dlg">
+          Maskelyne ki team ne pahaad ke <strong>North aur South</strong> — dono taraf —
+          observatories banaayi.<br><br>
+          Wahan se unhone taaron ki <span class="en">zenith angular distance</span> measure ki —
+          basically, apne seedhe upar ke point se tare ka angle.<br><br>
+          North aur South se readings compare ki —
+          difference aaya: <strong>54.6 arc seconds.</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Ground survey animation. Two numbers appear on screen side by side.</div>
+        </div>
+        <div class="dlg">
+          Lekin jab ground survey se actual difference nikala —
+          woh tha sirf <strong>42.94 arc seconds.</strong><br><br>
+          Toh yeh bache hue <em>11.6 arc seconds</em> —
+          yeh tha pahaad ka gravitational pull ka effect.<br><br>
+          Aur kyunki pahaad almost symmetric tha —
+          ek taraf ka pull hua: <strong>5.8 arc seconds.</strong><br><br>
+          <em>Chhota number. Bada matlab.</em>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Portrait of Charles Hutton. Survey dots on a map. Lines connecting them — contour lines forming.</div>
+        </div>
+        <div class="dlg">
+          Ab challenge tha pahaad ka <span class="en">volume</span> nikalna —
+          aur yahan hua kuch unexpected.<br><br>
+          Surveyor <em>Charles Hutton</em> ne saare survey points ek map pe rakhe.
+          Phir usne <strong>same height wale points ko lines se jod diya.</strong><br><br>
+          Aur bas — <span class="shout">Contour Lines ka invention ho gaya.</span><br><br>
+          Aaj ka har trekking map, har topographic chart —
+          <em>yahi Hutton ki accidental discovery ki wajah se hai.</em>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Formula appears on screen step by step.</div>
+        </div>
+        <div class="dlg">
+          Unhone pahaad ko <span class="en">vertical prisms</span> mein baant diya —
+          har prism ka volume aur density measure kiya.<br><br>
+          Phir yeh equation use hui:
+          <div class="formula-box">tan θ = F / W = (ρ_M / ρ_E) × (V_M / V_E) × (r_E / d)²</div>
+          θ hai deflection angle, ρ hai density, V hai volume, r hai Earth ki radius.<br><br>
+          Baaki sab values known the — bas solve karna tha <em>ρ_E</em> ke liye,
+          yani <strong>Earth ki density.</strong>
+        </div>
+      </div>
+    </div>
+    <div class="callout"><strong>Fun fact on-screen:</strong> "Hutton ne bina jaane cartography ki history badal di!"</div>
+  </div>
+
+  <!-- ACT 4 -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Act 4</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">🏆 Result aur Legacy (5:45 – 7:45)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Counter animating: 4500 → 5448 → 5515 kg/m³. Each number labelled.</div>
+        </div>
+        <div class="dlg">
+          Aur jab saari calculations complete huin —<br>
+          mila Earth ka average density: <strong>4,500 kg/m³.</strong><br><br>
+          Modern value hai <em>5,515 kg/m³</em> —
+          toh yeh result lagbhag 20% kam tha.<br><br>
+          But yaar — <strong>1774 mein, bina kisi computer ke, bina kisi modern instrument ke</strong> —
+          yeh ek <span class="shout">MASSIVE achievement</span> tha.
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Timeline graphic: Schiehallion → Cavendish → Modern science</div>
+        </div>
+        <div class="dlg">
+          Baad mein <strong>Henry Cavendish</strong> ne apne famous
+          <span class="en">Lead Ball experiment</span> se zyada accurate result diya —
+          <em>5,448 kg/m³.</em><br><br>
+          Aur aaj, modern science ne confirm kiya — <strong>5,515 kg/m³.</strong><br><br>
+          Har experiment pichle ke upar build karta gaya.
+          <em>Schiehallion tha pehla domino.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:26px;">📅 Quick Timeline</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-head">1773 — Proposal</div>
+        <div class="tl-body">Maskelyne ne Royal Society ko experiment ka idea diya. Charles Mason ko suitable mountain dhundhne bheja.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">1774 — Field Work</div>
+        <div class="tl-body">Schiehallion par observatories bani. Team ne mahino tak star angles measure kiye — Scottish weather mein!</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">1775 — Results</div>
+        <div class="tl-body">Earth density = 4,500 kg/m³ announce hua. Hutton ki contour lines ka invention ek bonus achievement.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">1798 — Cavendish</div>
+        <div class="tl-body">Lead Ball experiment se 5,448 kg/m³ — aur refined answer.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">Today</div>
+        <div class="tl-body">5,515 kg/m³ — modern accepted value. Schiehallion ki legacy still alive.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTRO -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-tag">Outro</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="sec-title">🎬 Closing — Emotion + CTA (7:45 – 8:15)</div>
+    <div class="script-block">
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label v">Visual</div>
+          <div class="dir-text">Slow pan over Schiehallion at sunset. Soft music builds.</div>
+        </div>
+        <div class="dlg">
+          Socho zara —<br>
+          Ek pahaad. Kuch dhaage. Aur kuch log jo <em>jaanna chahte the.</em><br><br>
+          Koi Google nahi. Koi calculator nahi.
+          Sirf <strong>ek sawaal aur us sawaal ko solve karne ki zid.</strong><br><br>
+          Aur usi zid se — unhone <em>poori duniya ko taul diya.</em><br><br>
+          <span class="shout">Yahi hai science ki asli power.</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dir">
+          <div class="dir-label c">CTA</div>
+          <div class="dir-text">Subscribe + Bell animation. Comment prompt on screen.</div>
+        </div>
+        <div class="dlg">
+          Agar yeh video interesting laga, toh
+          <em>Like zaroor karo</em> aur <strong>Subscribe karo</strong> —
+          taaki aisi aur science stories tumhare paas pahunchti rahen.<br><br>
+          Aur neeche comment mein batao —
+          <em>Cavendish ke Lead Ball experiment pe video chahiye?</em><br>
+          Let me know! 👇
+        </div>
+      </div>
+    </div>
+
+    <div class="outro-card">
+      <p>"Buddhi ke dum pe duniya ko taula ja sakta hai."</p>
+      <span>— Schiehallion Experiment, 1774 · Scotland</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
